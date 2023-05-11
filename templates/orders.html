@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "_head.html" %}
+  <body>
+    
+    <div class="container ">
+      <h1>Orders</h1>
+  
+
+      <div class="container text-center orderlijst-nav">
+        <div class="row">
+          <div class="col-4">
+            <input type="button" value="nieuwe orders" onClick="window.location.reload(true)">
+        <button class="betalingen">betalingen</button>
+        <button class="print">print orders</button>
+          </div>
+          <div class="col-4">
+            <form action="/detail" method="get">
+              <input type="text" name="id" id="myinput-1">
+              <button type="submit">Zoek</button>
+            </form>
+            
+          </div>
+          <div class="stats-1 col-2">Orders:  </div>
+          <div class="stats-2 col-2"><%= sum %> €</div>
+          
+        </div>  
+      
+      </div>
+        <table class=" table my-table  ">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Ordernummer</th>
+              <th scope="col">OrderLs</th>
+              <th scope="col">Klant</th>
+              <th scope="col">Land</th>
+              <th scope="col">Datum aangemaakt</th>
+              <th scope="col">orderstatus</th>
+              <th scope="col">Totaalbedrag</th>
+            </tr>
+          </thead>
+          <tbody > 
+              
+            
+            <% orders.forEach(element => { %>
+              <tr >
+              <th scope="row">|</th>
+              <td ><a class="link-success my-link" href=<%= `http://localhost:3000/detail?id=${element.number}` %> ><%= element.number %> </a></td>
+              <td > <%= element.number %>  </td>
+              
+              <td ><%= element.fullname %></td>
+              <td> <img src="<%= element.countryFlag %>" height="10px" alt=""> </td>
+             
+              <!-- <td><%= element.createdAt%></td> -->
+              <td class="orderlist-date"><%= element.visualCreatedAt%></td>
+              
+              <td class="orderlijst-status text-center badge text-wrap" style="width: 10rem;"><%= element.visualStatus %></td>
+             
+            
+              
+              <td class="orderlist-price"lijst-price-incl><%= element.priceIncl%> €</td>
+    
+              </tr>
+             
+            <% }) %>
+            
+    
+          </tbody>
+        </table>
+      
+      
+    
+    
+    
+        
+    
+      </div>
+  </body>
+</html>
