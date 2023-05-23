@@ -2,52 +2,45 @@
 <html lang="en">
   {% include "_head.html" %}
   <body>
-    <div class="container bg-secondary">
-      <h1>Log in</h1>
-      <div class="container my-width">
-        <div class="my-intro">
-          <h2>Log in</h2>
+    <div class="text-center mt-3">
+      <img
+        class=""
+        src="/static/img/Logo-brianto.png"
+        width="250px"
+        alt=""
+        srcset=""
+      />
+    </div>
+
+    <div
+      class="container bg-secondary-subtle p-3 mt-2 my-container shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+    >
+      <form class="position-relative" action="/login" method="post">
+        <div class="mb-3">
+          <label for="InputEmail" class="form-label">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="InputEmail"
+            aria-describedby="emailHelp"
+            name="email"
+          />
         </div>
-        <form>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Email address</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" class="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
-          <div class="mb-3 form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="exampleCheck1"
-            />
-            <label class="form-check-label" for="exampleCheck1"
-              >Check me out</label
-            >
-          </div>
-          <button type="submit" class="btn btn-primary my-button">
-            Submit
-          </button>
-        </form>
-      </div>
+        <div class="mb-3">
+          <label for="InputPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="InputPassword"
+            name="password"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-warning">login</button>
+      </form>
+    </div>
+    <div class="position-absolute bottom-0 start-50 translate-middle mb-2">
+      {% include "_footer.html" %}
     </div>
   </body>
 </html>

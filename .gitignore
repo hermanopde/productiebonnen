@@ -1,0 +1,22 @@
+__pycache__/
+
+pyvenv.cfg
+
+
+
+.env
+venvN/
+
+customizations/
+prints/
+
+#werkfiles
+sleep_testing.py
+test.py
+testfile.pdf
+db_querys.py
+product-n.json
+lsorder.json
+351.pdf
+joske.txt
+stack copy.py

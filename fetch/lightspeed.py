@@ -4,6 +4,7 @@ import requests
 import sys
 import time
 from pymongo import MongoClient
+from datetime import datetime
 
 from bson.objectid import ObjectId
 # print(sys.path)
@@ -145,7 +146,7 @@ def add_products_to_orders(orders):
         order_id = order["id"]
         order_number = order["number"]
         product_list = fetch_products_from_order(order_id, order_number)
-        time.sleep(1)
+        time.sleep(2)
         for product in product_list:
             order["products"].append(product)
 
@@ -175,7 +176,7 @@ def fetch_and_save_lsorders(last_order_id):
         print("SAVED TO DB", "new last order =", new_last_order)
 
     else:
-        print("GEEN NIEUWE ORDERS")
+        print("GEEN NIEUWE ORDERS", datetime.now())
 
 
 if __name__ == "__main__":

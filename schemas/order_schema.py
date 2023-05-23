@@ -77,7 +77,7 @@ order_1 = {
 
 }
 
-insert_test_order(order_1)
+#insert_test_order(order_1)
 
 # print(dt.today().day, dt.today().month, dt.today().year, dt.today().minute)
 # time.sleep(3)

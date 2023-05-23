@@ -1,0 +1,11 @@
+.my-container {
+  max-width: 600px;
+}
+.hoogte {
+  background-color: blueviolet;
+  height: 200px;
+}
+
+.my-height-1 {
+  height: 150px;
+}

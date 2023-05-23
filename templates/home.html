@@ -2,22 +2,18 @@
 <html lang="en">
   {% include "_head.html" %}
   <body>
-    <div class="container">
-      <div class="my-homepage1">
-        <h1>homepage</h1>
-        <h2>welkom</h2>
-      </div>
-
-      <div class="my-homepag2">
-        <form action="/userlogin" method="get">
-          <button class="btn btn-primary" type="submit">login</button>
-        </form>
-        <form action="/userregister" method="get">
-          <button type="submit">register</button>
-        </form>
-      </div>
+    <div class="text-center mt-3">
+      <img
+        class=""
+        src="/static/img/Logo-brianto.png"
+        width="250px"
+        alt=""
+        srcset=""
+      />
     </div>
 
-    {% include "_footer.html" %}
+    <div class="position-absolute bottom-0 start-50 translate-middle mb-2">
+      {% include "_footer.html" %}
+    </div>
   </body>
 </html>

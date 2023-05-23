@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "_head.html" %}
+  <body>
+    <div
+      class="container position-relative bg-secondary-subtle p-3 mt-5 my-container shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+    >
+      <div class="text-center mt-3">
+        <img
+          class=""
+          src="/static/img/Logo-brianto.png"
+          width="250px"
+          alt=""
+          srcset=""
+        />
+      </div>
+
+      <div class="text-center mt-3 mb-5">
+        <h3>Dank voor je registratie</h3>
+      </div>
+
+      <form class="position-relative mt-5" action="/login" method="get">
+        <button class="btn btn-warning" type="submit">naar login</button>
+      </form>
+    </div>
+
+    <div class="position-absolute bottom-0 start-50 translate-middle mb-2">
+      {% include "_footer.html" %}
+    </div>
+  </body>
+</html>

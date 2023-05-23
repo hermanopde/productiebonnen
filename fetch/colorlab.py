@@ -8,6 +8,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import hashlib
 import hmac
+from stack import upload_custom
+from datetime import datetime
 
 
 config = dotenv_values(".env")
@@ -55,26 +57,32 @@ def get_customization():
                                "X-Colorlab-Api-Key": COLORLAB_API_KEY, "X-Colorlab-Api-Signature": hash}
                     response = requests.get(url=colorlab_url, headers=headers)
                     customization_file = response.content
-                    print(response.headers["Content-Length"],
-                          response.headers["Alt-Svc"])
+                    file_size = response.headers["Content-Length"],
 
                     # check if the request was successful
                     if response.status_code == 200:
-                        # open a file to write the contents of the PDF to
+                        # open a file to write the contents of the PDF local
                         with open(f"./customizations/{pdf_file_name}", 'wb') as f:
                             f.write(customization_file)
-                            print("PDF file saved successfully")
+                            print(
+                                f"{pdf_file_name} saved successfully", datetime.now())
+
+                        # time.sleep(2)
+
+                        # upload_custom(customization_file,
+                        #               file_size, pdf_file_name)
                     else:
                         print("Error: could not receive PDF file")
 
-                    time.sleep(5)
+                    time.sleep(1)
 
                     img_pages = convert_from_path(f"./customizations/{pdf_file_name}",
                                                   poppler_path=POPPLER_PATH)
                     for page in img_pages:
                         page.save(f"./prints/{jpeg_file_name}", "JPEG")
 
-                time.sleep(30)
+                # SLEEP : 6 colorlab requests per minute
+                time.sleep(10)
 
             order_collection.update_one({"number": order["number"]}, {
                                         "$set": {"flagCustomDownloaded": True}})
