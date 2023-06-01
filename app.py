@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from dotenv import dotenv_values
 from passlib.hash import pbkdf2_sha256
 
-from flask import Flask, redirect, url_for, render_template, request, session, flash
+from flask import Flask, redirect, url_for, render_template, request, session, flash, abort
 from routes import order_pages, user_pages
 from fetch import fetch_and_save_lsorders, fetch_last_order, get_customization
 import time
@@ -66,54 +66,55 @@ def orders():
 
 @app.route("/<path>")
 def lost(path):
-    return render_template("lost.html", path=path)
-
-# XXXXX- REGISTER PART ONLY FOR INTERNAL USE - XXXXX
-
-# @app.route("/register", methods=["POST", "GET"])
-# def register():
-#     if request.method == "POST":
-#         user = request.form.get("email")
-#         password = request.form.get("password")
-#         hashed_password = pbkdf2_sha256.hash(password)
-#         user_check = user_collection.find_one({"user": user})
-#         if user_check:
-#             print("USER BESTAAT REEDS")
-#             # flash("USER BESTAAT REEDS")
-#             return redirect(url_for("login.html"))
-
-#         else:
-#             new_user = {"user": user, "hpw": hashed_password}
-#             user_collection.insert_one(new_user)
-#             # flash("THANK YOU FOR REGISTER")
-#             return redirect(url_for("register_success"))
-#     else:
-#         return render_template("register.html")
+    abort(404)
+    return render_template("404.html", path=path)
 
 
-# @app.route("/register-success")
-# def register_success():
-#     return render_template("thank-register.html")
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html", error=error), 404
 
-# XXXXX- END OF REGISTER PART - XXXXX
-
-
+    # XXXXX- REGISTER PART ONLY FOR INTERNAL USE - XXXXX
+    # @app.route("/register", methods=["POST", "GET"])
+    # def register():
+    #     if request.method == "POST":
+    #         user = request.form.get("email")
+    #         password = request.form.get("password")
+    #         hashed_password = pbkdf2_sha256.hash(password)
+    #         user_check = user_collection.find_one({"user": user})
+    #         if user_check:
+    #             print("USER BESTAAT REEDS")
+    #             # flash("USER BESTAAT REEDS")
+    #             return redirect(url_for("login.html"))
+    #         else:
+    #             new_user = {"user": user, "hpw": hashed_password}
+    #             user_collection.insert_one(new_user)
+    #             # flash("THANK YOU FOR REGISTER")
+    #             return redirect(url_for("register_success"))
+    #     else:
+    #         return render_template("register.html")
+    # @app.route("/register-success")
+    # def register_success():
+    #     return render_template("thank-register.html")
+    # XXXXX- END OF REGISTER PART - XXXXX
 if __name__ == "__main__":
+    print("APP IS RUNNING ON PORT 5000")
     app.run(debug=True)
-    print("STARTEN WHILE LOOP")
-    # ---CRON JOB---
-    while True:
-        try:
-            last_order_id = fetch_last_order()
-            # fetch_and_save_lsorders(244670771)
-            fetch_and_save_lsorders(last_order_id)
-            get_customization()
-            print("APP.PY", datetime.now())
-            time.sleep(300)
+    print("AFTER APP RUN")
 
-        except KeyboardInterrupt:
-            print("END OF LOOP")
-            break
-        except:
-            print("SOMETHING WENT WRONG")
-            break
+    # ---CRON JOB---
+    # while True:
+    #     try:
+    #         last_order_id = fetch_last_order()
+    #         # fetch_and_save_lsorders(244670771)
+    #         fetch_and_save_lsorders(last_order_id)
+    #         get_customization()
+    #         print("APP.PY", datetime.now())
+    #         time.sleep(300)
+
+    #     except KeyboardInterrupt:
+    #         print("END OF LOOP")
+    #         break
+    #     except:
+    #         print("SOMETHING WENT WRONG")
+    #         break
