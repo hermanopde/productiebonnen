@@ -6,6 +6,8 @@ pyvenv.cfg
 
 .env
 venvN/
+customizations/
+prints/
 
 
 
@@ -16,6 +18,7 @@ testfile.pdf
 db_querys.py
 product-n.json
 lsorder.json
-351.pdf
+
 joske.txt
-stack copy.py
+stack_copy.py
+stack.py

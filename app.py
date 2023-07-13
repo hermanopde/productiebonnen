@@ -74,6 +74,7 @@ def lost(path):
 def page_not_found(error):
     return render_template("404.html", error=error), 404
 
+
     # XXXXX- REGISTER PART ONLY FOR INTERNAL USE - XXXXX
     # @app.route("/register", methods=["POST", "GET"])
     # def register():
@@ -103,18 +104,18 @@ if __name__ == "__main__":
     print("AFTER APP RUN")
 
     # ---CRON JOB---
-    # while True:
-    #     try:
-    #         last_order_id = fetch_last_order()
-    #         # fetch_and_save_lsorders(244670771)
-    #         fetch_and_save_lsorders(last_order_id)
-    #         get_customization()
-    #         print("APP.PY", datetime.now())
-    #         time.sleep(300)
+    while True:
+        try:
+            last_order_id = fetch_last_order()
+            # fetch_and_save_lsorders(244670771)
+            fetch_and_save_lsorders(last_order_id)
+            get_customization()
+            print("APP.PY", datetime.now())
+            time.sleep(300)
 
-    #     except KeyboardInterrupt:
-    #         print("END OF LOOP")
-    #         break
-    #     except:
-    #         print("SOMETHING WENT WRONG")
-    #         break
+        except KeyboardInterrupt:
+            print("END OF LOOP")
+            break
+        except:
+            print("SOMETHING WENT WRONG")
+            break

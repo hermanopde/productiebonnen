@@ -67,14 +67,12 @@ def get_customization():
                             print(
                                 f"{pdf_file_name} saved successfully", datetime.now())
 
-                        # time.sleep(2)
-
                         # upload_custom(customization_file,
                         #               file_size, pdf_file_name)
                     else:
                         print("Error: could not receive PDF file")
 
-                    time.sleep(1)
+                    time.sleep(2)
 
                     img_pages = convert_from_path(f"./customizations/{pdf_file_name}",
                                                   poppler_path=POPPLER_PATH)
