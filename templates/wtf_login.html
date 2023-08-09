@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "_head.html" %}
+  <body>
+    <div class="text-center mt-3">
+      <img
+        class=""
+        src="/static/img/Logo-brianto.png"
+        width="250px"
+        alt=""
+        srcset=""
+      />
+    </div>
+
+    <div
+      class="container bg-secondary-subtle p-3 mt-2 my-container shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+    >
+      <form class="position-relative" action="/login" method="post">
+        {{form.hidden_tag()}}
+        <div class="mb-3">
+          {{form.email.label(class_= "form-label")}}
+          {{form.email(class_="form-control")}}
+        </div>
+        <div class="mb-3">
+          {{form.paswoord.label(class_= "form-label")}}
+          {{form.paswoord(class_="form-control")}}
+        </div>
+        <div>{{form.submit(class_="btn btn-warning")}}</div>
+      </form>
+    </div>
+  </body>
+</html>

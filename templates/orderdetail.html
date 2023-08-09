@@ -3,8 +3,116 @@
   {% include "_head.html" %}
 
   <body>
-    <h1>Order detail</h1>
-    <p>{{order_nr}}</p>
-    {% include "_footer.html" %}
+       
+
+    <div class="container">
+    
+      <div class="row mt-4">
+        <div class="col">
+          <img src="/static/img/Logo-brianto.png" height="80px" alt="">
+        </div>          
+         
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">
+          <p><strong>Besteldatum  :  </strong> {{formatted_date}}</p>
+          <p class="badge bg-secondary"> {{formatted_status}}</p>
+
+        </div>          
+        <div class="col text-end" >
+          <h3>Ordernr. Lightspeed {{order["number"]}}  </h3>
+          <h3>Ordernr. Exact </h2>            
+        </div>
+      </div>     
+      <table class="table ">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Omschrijving</th>
+        <th scope="col">Artikelcode</th>
+        <th scope="col">Magazijnlocatie</th>
+        <th scope="col" >Perso</th>
+        <th scope="col">Aantal</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody >
+        {% for product in order["products"]%}
+        <tr class="td-orderlist">
+          <th scope="row">|</th>        
+          <td > <strong> {{product["productTitle"]}}</strong> {{product["variantTitle"]}}<br>C-id:{{product["customizationId"]}}<br>Machine instellingen</td>
+          <td>{{product["articleCode"]}}</td>  
+          <td>{{product["magazijnPositie"]}}</td>
+          {%if product["jpgFileName"]%}
+          <td> <img src="/static/prints/{{product['jpgFileName']}}" height="150" width="225px" style = "object-fit:contain" alt=""> </td>
+          {%else%}
+          <td> <img src="/static/img/dummy.png" height="150" width="225px" style = "object-fit:contain" alt=""> </td>
+          {%endif%}
+          <td>{{product["quantityOrdered"]}}</td>
+          <td> <img src="/static/img/square.png" height="17px" alt=""> </td>
+        {%endfor%}  
+
+        
+      
+      </tbody>
+      </table> 
+    
+      <div class="row">
+        <div class="col">
+         <p><strong>{{order["shipmentTitle"]}} </strong></p>
+        </div>
+      </div>
+
+      
+      
+      <div class="row">
+        <div class="col">
+          <form  class ="order-detail-btn mb-2" action="/orders">
+            <button class = "p-2"type="submit">Terug naar orders</button>
+          </form>
+        </div>
+        <div class="col-10"><button class = "pt-1"><p><a class="link-success my-link"  href="/print_one/?id={{order['number']}}" >PRINT ORDER</a></p></button></div>
+        
+      </div>
+
+      
+      
+
+           
+
+      
+
+    <div class="container mt-4">
+      <div class="row"><h6>Opmerkingen: </h6><p>{{order["comment"]}}</p></div>
+      <div class="row mt-3">
+        <div class="col">
+          <h5 >Contactinformatie</h5>
+          <p>{{order["firstname"]}} {{order["lastname"]}}<br>{{order["email"]}}<br>{{order["mobile"]}}      
+          
+          </p>
+          
+        </div>
+        <div class="col">
+          <h5>Verzendadres</h5>
+          {% if order["addressShippingCompany"] != False %}
+            <p>{{order["addressShippingCompany"]}}</p>
+           {%endif%}
+           
+           <p> {{order["addressShippingName"]}}<br>
+            {{order["addressShippingStreet"]}} {{order["addressShippingNumber"]}} {{order["addressShippingExtension"]}}<br>
+            {{order["addressShippingZipcode"]}}  {{order["addressShippingCity"]}}<br>
+            <span class="text-danger ">{{order["addressShippingCountry"]}} </span>
+          </p>
+      </div>
+    </div>
+
+  </div> 
+  <!-- {% include "_footer.html" %} -->
   </body>
 </html>
+
+<!-- //////////////////////////// -->
+<!-- <body>
+  
+</body> -->

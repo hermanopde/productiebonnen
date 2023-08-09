@@ -2,79 +2,122 @@
 <html lang="en">
   {% include "_head.html" %}
   <body>
-    
-    <div class="container ">
+    <div class="container">
       <h1>Orders</h1>
-  
 
       <div class="container text-center orderlijst-nav">
         <div class="row">
-          <div class="col-4">
-            <input type="button" value="nieuwe orders" onClick="window.location.reload(true)">
-        <button class="betalingen">betalingen</button>
-        <button class="print">print orders</button>
+          <div class="col">
+            <input
+              type="button"
+              value="nieuwe orders"
+              onClick="window.location.reload(true)"
+            />
           </div>
-          <div class="col-4">
-            <form action="/detail" method="get">
-              <input type="text" name="id" id="myinput-1">
-              <button type="submit">Zoek</button>
+          <div class="col">
+            <form action="/order_print" method="get">
+              <button type="submit">Print Orders</button>
             </form>
-            
           </div>
-          <div class="stats-1 col-2">Orders:  </div>
-          <div class="stats-2 col-2"><%= sum %> €</div>
-          
-        </div>  
-      
+
+          <div class="col-3">
+            <!-- <form action="/orderdetail" method="get">
+              <input type="text" name="id" id="myinput-1" />
+              <button type="submit">Zoek</button>
+            </form> -->
+
+            <form action="/orderdetail-wtf" method="post">
+              {{form.hidden_tag()}} {{form.gezocht_order}} {{form.submit_s}}
+            </form>
+          </div>
+
+          <div class="col">
+            <form action="/logout" method="get">
+              <button type="submit">Logout</button>
+            </form>
+          </div>
+          <div class="col">
+            <div>Orders: {{total}} €</div>
+          </div>
+        </div>
       </div>
-        <table class=" table my-table  ">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Ordernummer</th>
-              <th scope="col">OrderLs</th>
-              <th scope="col">Klant</th>
-              <th scope="col">Land</th>
-              <th scope="col">Datum aangemaakt</th>
-              <th scope="col">orderstatus</th>
-              <th scope="col">Totaalbedrag</th>
-            </tr>
-          </thead>
-          <tbody > 
-              
-            
-            <% orders.forEach(element => { %>
-              <tr >
-              <th scope="row">|</th>
-              <td ><a class="link-success my-link" href=<%= `http://localhost:3000/detail?id=${element.number}` %> ><%= element.number %> </a></td>
-              <td > <%= element.number %>  </td>
-              
-              <td ><%= element.fullname %></td>
-              <td> <img src="<%= element.countryFlag %>" height="10px" alt=""> </td>
-             
-              <!-- <td><%= element.createdAt%></td> -->
-              <td class="orderlist-date"><%= element.visualCreatedAt%></td>
-              
-              <td class="orderlijst-status text-center badge text-wrap" style="width: 10rem;"><%= element.visualStatus %></td>
-             
-            
-              
-              <td class="orderlist-price"lijst-price-incl><%= element.priceIncl%> €</td>
-    
-              </tr>
-             
-            <% }) %>
-            
-    
-          </tbody>
-        </table>
-      
-      
-    
-    
-    
-        
-    
-      </div>
+      <table class="table my-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <td>o</td>
+            <th scope="col">Ordernummer</th>
+            <!-- <th scope="col">OrderLs</th> -->
+            <th scope="col">Klant</th>
+            <th scope="col">Land</th>
+            <th scope="col">Datum aangemaakt</th>
+            <th scope="col">orderstatus</th>
+            <th scope="col">Totaalbedrag</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders_array %}
+          <tr class="{{order[8]}}">
+            <th scope="row">|</th>
+            <td>
+              <form action="">
+                <input
+                  type="checkbox"
+                  id="vehicle1"
+                  name="vehicle1"
+                  value="{{order[0]}}"
+                  method="get"
+                />
+              </form>
+            </td>
+            <td>
+              <a
+                class="link-success my-link"
+                href="/orderdetail/?id={{order[0]}}"
+                >{{order[0]}}</a
+              >
+            </td>
+            <td>{{order[1]}} {{order[2]}}</td>
+            {%if order[3] == "Belgium"%}
+            <td>
+              <img
+                src="/static/img/flag-icon-belgium.png"
+                height="10px"
+                alt=""
+              />
+            </td>
+            {% elif order[3] == "Netherlands, The"%}
+            <td>
+              <img
+                src="/static/img/flag-icon-holland.png"
+                height="10px"
+                alt=""
+              />
+            </td>
+            {% else %}
+            <td>
+              <img
+                src="/static/img/flag-icon-france.png"
+                height="10px"
+                alt=""
+              />
+            </td>
+            {% endif%}
+
+            <td class="orderlist-date">{{order[5]}}</td>
+            <!-- <td class="orderlijst-status">{{order[6]}}</td> -->
+            <td
+              class="orderlijst-status text-center badge text-wrap mt-1"
+              style="width: 10rem"
+            >
+              {{order[6]}}
+            </td>
+
+            <td class="orderlist-price">€ {{order[7]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

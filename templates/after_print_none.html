@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "_head.html" %}
+  <body class="bg-dark-subtle">
+    <div class="container my-container mt-5">
+      <div class="text-center mt-5">
+        <img
+          class=""
+          src="/static/img/Logo-brianto.png"
+          width="250px"
+          alt=""
+          srcset=""
+        />
+      </div>
+      <div class="mt-5 position-relative my-height-1">
+        <div class="position-absolute top-0 start-50 translate-middle">
+          <h3>Er zijn geen nieuwe orders om te printen</h3>
+        </div>
+        <div class="position-absolute top-50 start-50 translate-middle"></div>
+        <div class="position-absolute top-100 start-50 translate-middle">
+          <a href="{{url_for('orders')}}"> TERUG NAAR ORDERS</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

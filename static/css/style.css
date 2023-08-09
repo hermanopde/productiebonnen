@@ -1,5 +1,5 @@
 .my-container {
-  max-width: 600px;
+  max-width: 800px;
 }
 .hoogte {
   background-color: blueviolet;
@@ -8,4 +8,12 @@
 
 .my-height-1 {
   height: 150px;
+}
+
+.printed {
+  background-color: rgb(209, 209, 209);
+}
+
+.my-link {
+  text-decoration: none;
 }
