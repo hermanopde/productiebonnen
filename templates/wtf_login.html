@@ -15,7 +15,11 @@
     <div
       class="container bg-secondary-subtle p-3 mt-2 my-container shadow-sm p-3 mb-5 bg-body-tertiary rounded"
     >
-      <form class="position-relative" action="/login" method="post">
+      <form
+        class="position-relative"
+        action="{{url_for('login')}}"
+        method="post"
+      >
         {{form.hidden_tag()}}
         <div class="mb-3">
           {{form.email.label(class_= "form-label")}}

@@ -18,7 +18,11 @@
         </div>
         <div class="position-absolute top-50 start-50 translate-middle"></div>
         <div class="position-absolute top-100 start-50 translate-middle">
-          <a href="{{url_for('login')}}"> TERUG NAAR LOGIN</a>
+          <form action="/login" method="get">
+            <button class="btn btn-outline-secondary mt-5" type="submit">
+              TERUG NAAR LOGIN
+            </button>
+          </form>
         </div>
       </div>
     </div>

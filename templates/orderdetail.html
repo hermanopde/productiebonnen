@@ -5,7 +5,7 @@
   <body>
        
 
-    <div class="container">
+    <div class="container my-bg">
     
       <div class="row mt-4">
         <div class="col">
@@ -41,7 +41,7 @@
         {% for product in order["products"]%}
         <tr class="td-orderlist">
           <th scope="row">|</th>        
-          <td > <strong> {{product["productTitle"]}}</strong> {{product["variantTitle"]}}<br>C-id:{{product["customizationId"]}}<br>Machine instellingen</td>
+          <td > <strong> {{product["productTitle"]}}</strong> {{product["variantTitle"]}}<br>c-id:{{product["customizationId"]}}</td>
           <td>{{product["articleCode"]}}</td>  
           <td>{{product["magazijnPositie"]}}</td>
           {%if product["jpgFileName"]%}
@@ -68,11 +68,18 @@
       
       <div class="row">
         <div class="col">
-          <form  class ="order-detail-btn mb-2" action="/orders">
-            <button class = "p-2"type="submit">Terug naar orders</button>
+          <form  class ="order-detail-btn mb-2" action="{{url_for('orders')}}">
+            <button class = "btn btn-warning" type="submit">Terug naar orders</button>
           </form>
         </div>
-        <div class="col-10"><button class = "pt-1"><p><a class="link-success my-link"  href="/print_one/?id={{order['number']}}" >PRINT ORDER</a></p></button></div>
+        
+        <div class="col-10">
+          <form action="{{url_for('print_one')}}" method="post">
+            <input type="hidden" id="fname" name="order" value="{{order['number']}}">
+            <button class = "btn btn-warning" type="submit">Print order</button>
+          </form>
+
+        </div>
         
       </div>
 

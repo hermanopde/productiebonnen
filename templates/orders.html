@@ -3,49 +3,77 @@
   {% include "_head.html" %}
   <body>
     <div class="container">
-      <h1>Orders</h1>
+      <h3>Orders</h3>
 
-      <div class="container text-center orderlijst-nav">
-        <div class="row">
-          <div class="col">
+      <div class="container my-bg">
+        <div class="row bg-dark text-center pt-1 pb-1">
+          <!-- <div class="col">
             <input
               type="button"
               value="nieuwe orders"
               onClick="window.location.reload(true)"
             />
-          </div>
-          <div class="col">
+          </div> -->
+          <div class="col-2">
             <form action="/order_print" method="get">
-              <button type="submit">Print Orders</button>
+              <button class="btn btn-outline-warning" type="submit">
+                Print Orders
+              </button>
             </form>
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
+            <form action="/orders" method="get">
+              <button class="btn btn-outline-warning" type="submit">
+                Nieuwe Orders
+              </button>
+            </form>
+          </div>
+
+          <div class="col-4">
             <!-- <form action="/orderdetail" method="get">
               <input type="text" name="id" id="myinput-1" />
               <button type="submit">Zoek</button>
             </form> -->
 
             <form action="/orderdetail-wtf" method="post">
-              {{form.hidden_tag()}} {{form.gezocht_order}} {{form.submit_s}}
+              <div class="input-group">
+                {{form.csrf_token}} {{form.gezocht_order(class_
+                ="form-control")}} {{form.submit_s(class_ = "btn
+                btn-outline-warning")}}
+              </div>
             </form>
           </div>
 
-          <div class="col">
+          <div class="col-4">
             <form action="/logout" method="get">
-              <button type="submit">Logout</button>
+              <button class="btn btn-outline-warning" type="submit">
+                Logout
+              </button>
             </form>
           </div>
-          <div class="col">
+          <!-- <div class="col">
             <div>Orders: {{total}} €</div>
-          </div>
+          </div> -->
         </div>
       </div>
       <table class="table my-table">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <td>o</td>
+            <!-- <td>o</td> -->
+            <td>
+              <div class="col">
+                <form action="/order_print" method="get">
+                  <button
+                    class="btn btn-outline-secondary btn-sm"
+                    type="submit"
+                  >
+                    P
+                  </button>
+                </form>
+              </div>
+            </td>
             <th scope="col">Ordernummer</th>
             <!-- <th scope="col">OrderLs</th> -->
             <th scope="col">Klant</th>
@@ -107,7 +135,7 @@
             <td class="orderlist-date">{{order[5]}}</td>
             <!-- <td class="orderlijst-status">{{order[6]}}</td> -->
             <td
-              class="orderlijst-status text-center badge text-wrap mt-1"
+              class="orderlijst-status text-center badge text-wrap mt-2"
               style="width: 10rem"
             >
               {{order[6]}}

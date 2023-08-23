@@ -53,7 +53,10 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
 
     # solve unicode issues hith latin-1 supported fonts
     def solve_unicode(str):
-        formatted_str = str.replace('’', '-')
+        formatted_1 = str.replace('’', '-')
+        formatted_str = formatted_1.encode(
+            'latin1', errors="replace").decode('latin1')
+
         return formatted_str
 
     def print_products(product):
@@ -71,8 +74,8 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
         pdf.set_font('helvetica', '', 10)
         cord_y = pdf.get_y()
         pdf.set_font('helvetica', '', 9)
-        pdf.multi_cell(80, 5, f'{machine}', 0, 1, 'C')
-        pdf.multi_cell(80, 5, f'{machine}', 0, 1, 'C')
+        pdf.multi_cell(80, 5, f'{product["productie_inst_1"]}', 0, 1, 'L')
+        pdf.multi_cell(80, 5, f'{product["productie_inst_2"]}', 0, 1, 'L')
         if product["jpgFileName"]:
             try:
 
@@ -88,7 +91,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
                       link='')
             pdf.set_y(cord_y + 25)
 
-# CREATE PDF
+    # CREATE PDF
     # HEADING
 
     for order in orders:
@@ -161,7 +164,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
     # OPMERKINGENVELD
         pdf.set_font('helvetica', '', 9)
         if order["comment"] != "":
-            pdf.cell(
+            pdf.multi_cell(
                 180, 5, f'Opmerkingen: {solve_unicode(order["comment"])}', 0, 1, 'L')
 
     # FOOTER
@@ -198,6 +201,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
 
     pdf.output(
         f'/Users/herma/stack2/pdf/Bonnen-{hoogste}-p-{aantal_pag}.pdf', 'F')
+#       pdf.output(f'/home/hodb/STACK/pdf/Bonnen-{hoogste}-p-{aantal_pag}.pdf', 'F')
 
 
 if __name__ == "__main__":

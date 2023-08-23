@@ -82,8 +82,9 @@ def get_customization():
                 # SLEEP : 6 colorlab requests per minute
                 time.sleep(10)
 
-            order_collection.update_one({"number": order["number"]}, {
-                                        "$set": {"flagCustomDownloaded": True}})
+            objInstance = ObjectId(order["_id"])
+            order_collection.update_one({"_id": objInstance}, {
+                "$set": {"flagCustomDownloaded": True}})
 
         else:
             print("ALL CUSTOMIZATIONS DONE")

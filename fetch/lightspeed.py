@@ -26,6 +26,8 @@ client = MongoClient(connection_string)
 db = client.packinglist
 order_collection = db.lsorders
 last_order_collection = db.lastorder
+exact_products_collection = db.exact_producten
+
 
 # //--------------GET ORDERS LiMIT FROM LIGHTSPEED------------
 # https://94a9144f0045ad47828370f2377913da:f51b1ad465c34d47a3b984cf9bb192e8@api.webshopapp.com/nl/orders.json?limit=1
@@ -47,6 +49,8 @@ def fetch_orders_since(last_order):
         order_for_db = {
             "id": order["id"],
             "created_at": order["createdAt"],
+            "paid_created_at": order["createdAt"],
+            "shipped_created_at": "",
             "number": int(order["number"]),
             "status": order["status"],
             "email": order["email"],
@@ -92,6 +96,10 @@ def fetch_orders_since(last_order):
 
 # //--------------GET PRODUCTS FROM ORDER LIGHTSPEED------------
 
+def get_machine_inst(article):
+    r = exact_products_collection.find_one({"article": article})
+    return r
+
 
 def fetch_products_from_order(order_id, order_number):
     url_products = f"https://{api_key_ls}:{api_secret_key_ls}@api.webshopapp.com/nl/orders/{order_id}/products.json"
@@ -102,6 +110,7 @@ def fetch_products_from_order(order_id, order_number):
     product_list_for_db = []
 
     for prod in product_list:
+        machine_inst = get_machine_inst(prod["articleCode"])
         product = {
             "articleCode": prod["articleCode"],
             "productTitle": prod["productTitle"],
@@ -115,8 +124,8 @@ def fetch_products_from_order(order_id, order_number):
             "pdfFileName": "",
             "jpgFileName": "",
             "magazijnPositie": "",
-            "productie_inst_1": "",
-            "productie_inst_2": "",
+            "productie_inst_1": machine_inst["machine1"],
+            "productie_inst_2": machine_inst["machine2"],
         }
 
         if prod["customFields"] != False:
@@ -183,8 +192,9 @@ def fetch_and_save_lsorders(last_order_id):
 
 
 if __name__ == "__main__":
+
+    # fetch_and_save_lsorders(252071621)
     print(__name__, ": VAN FETCH LIFGTSPEED")
-    # fetch_and_save_lsorders(last_order)
 
 
 # printer = pprint.PrettyPrinter()

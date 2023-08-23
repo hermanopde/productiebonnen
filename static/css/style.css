@@ -2,7 +2,7 @@
   max-width: 800px;
 }
 .hoogte {
-  background-color: blueviolet;
+  background-color: rgb(238, 223, 200);
   height: 200px;
 }
 
@@ -11,9 +11,13 @@
 }
 
 .printed {
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(230, 230, 230);
 }
 
 .my-link {
   text-decoration: none;
+}
+
+.my-bg {
+  background-color: rgb(242, 242, 242);
 }
