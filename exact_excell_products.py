@@ -33,7 +33,7 @@ exact_products_collection = db.exact_producten
 
 def exact_products_to_db():
     # read excelfile in dict
-    df = pd.read_excel("LogItems.xlsx")
+    df = pd.read_excel("LogItems_test.xlsx")
     dict = df.to_dict()
 
     # xls = ExcelFile('LogItems_test.xlsx')
@@ -43,6 +43,7 @@ def exact_products_to_db():
     # update products
     for key, value in dict["Code"].items():
         art_number = str(value)
+        print(art_number)
         # STR TO HAndle nan
         mach_1 = str(dict["Productie Instellingen"][key])
         mach_2 = str(dict["X252"][key])
@@ -69,5 +70,5 @@ def get_machine_inst(article):
 if __name__ == "__main__":
     print(__name__, ": VAN EAXCT_PRODUCTS.PY")
     # exact_products_to_db()
-    a = get_machine_inst("1009201")["machine1"]
+    a = get_machine_inst("1000000")
     print(a)

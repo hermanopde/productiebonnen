@@ -224,7 +224,7 @@ def order_print():
     #     {"flagPrinted": False}).sort("id", -1).limit(1)
 
     gevonden_orders = orders_collection.find({"$and": [{"flagPrinted": False}, {"$or": [
-                                             {"status": "processing_awaiting_shipment"}, {"status": "processing_awaiting_pickup"}]}]}).sort("id", -1).limit(PDF_PAGE_PRINT_LIMIT)
+                                             {"status": "processing_awaiting_shipment"}, {"status": "processing_awaiting_pickup"}]}]}).sort("paid_created_at", -1).limit(PDF_PAGE_PRINT_LIMIT)
 
     # gevonden_orders = orders_collection.find(
     #     {"number": {"$lte": 354560}}).sort("number", -1).limit(2)
@@ -292,6 +292,28 @@ def print_one():
         return render_template("after_print_one.html", order_number=order_number)
     except:
         return "ER GING IETS FOUT BIJ HET PRINT_ONE"
+
+
+@app.route("/print_checkbox/", methods=["POST"])
+def print_checkbox():
+    email = session.get("email")
+    if not email:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        r = request.form.getlist("mycheckbox")
+        order_list = [int(o) for o in r]
+        aantal_orders = len(r)
+        if aantal_orders != 0:
+            hoogste_order_number = max(r)
+            gevonden_orders = orders_collection.find(
+                {"number": {"$in": order_list}}).sort("number", -1)
+
+            create_orderbonnen(
+                gevonden_orders, hoogste_order_number, aantal_orders)
+            return render_template("after_print.html", hoogste_order_number=hoogste_order_number)
+        else:
+            return render_template("after_print_none.html")
 
 
 @app.route("/webhook-ls/", methods=["POST"])
@@ -475,6 +497,6 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     print("APP IS RUNNING ON PORT 5000")
-    app.run(debug=True)
-    # app.run()
+    # app.run(debug=True)
+    app.run()
     print("AFTER APP RUN")

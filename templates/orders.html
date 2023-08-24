@@ -14,18 +14,19 @@
               onClick="window.location.reload(true)"
             />
           </div> -->
+
           <div class="col-2">
-            <form action="/order_print" method="get">
+            <form action="{{url_for('orders')}}" method="get">
               <button class="btn btn-outline-warning" type="submit">
-                Print Orders
+                Nieuwe Orders
               </button>
             </form>
           </div>
 
           <div class="col-2">
-            <form action="/orders" method="get">
+            <form action="{{url_for('order_print')}}" method="get">
               <button class="btn btn-outline-warning" type="submit">
-                Nieuwe Orders
+                Print Orders
               </button>
             </form>
           </div>
@@ -36,7 +37,7 @@
               <button type="submit">Zoek</button>
             </form> -->
 
-            <form action="/orderdetail-wtf" method="post">
+            <form action="{{url_for('orderdetail_wtf')}}" method="post">
               <div class="input-group">
                 {{form.csrf_token}} {{form.gezocht_order(class_
                 ="form-control")}} {{form.submit_s(class_ = "btn
@@ -46,7 +47,7 @@
           </div>
 
           <div class="col-4">
-            <form action="/logout" method="get">
+            <form action="{{url_for('logout')}}" method="get">
               <button class="btn btn-outline-warning" type="submit">
                 Logout
               </button>
@@ -64,14 +65,14 @@
             <!-- <td>o</td> -->
             <td>
               <div class="col">
-                <form action="/order_print" method="get">
-                  <button
-                    class="btn btn-outline-secondary btn-sm"
-                    type="submit"
-                  >
-                    P
-                  </button>
-                </form>
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  type="submit"
+                  form="myform"
+                  value="submit"
+                >
+                  P
+                </button>
               </div>
             </td>
             <th scope="col">Ordernummer</th>
@@ -84,66 +85,74 @@
           </tr>
         </thead>
         <tbody>
-          {% for order in orders_array %}
-          <tr class="{{order[8]}}">
-            <th scope="row">|</th>
-            <td>
-              <form action="">
+          <form
+            action="{{url_for('print_checkbox')}}"
+            ,
+            name="myform"
+            method="post"
+            id="myform"
+          >
+            {% for order in orders_array %}
+            <tr class="{{order[8]}}">
+              <th scope="row">|</th>
+              <td>
                 <input
                   type="checkbox"
-                  id="vehicle1"
-                  name="vehicle1"
+                  id="mycheckbox"
+                  name="mycheckbox"
                   value="{{order[0]}}"
-                  method="get"
+                  method="post"
                 />
-              </form>
-            </td>
-            <td>
-              <a
-                class="link-success my-link"
-                href="/orderdetail/?id={{order[0]}}"
-                >{{order[0]}}</a
+
+                <!-- <input type="submit" value=""> -->
+              </td>
+              <td>
+                <a
+                  class="link-success my-link"
+                  href="/orderdetail/?id={{order[0]}}"
+                  >{{order[0]}}</a
+                >
+              </td>
+              <td>{{order[1]}} {{order[2]}}</td>
+              {%if order[3] == "Belgium"%}
+              <td>
+                <img
+                  src="/static/img/flag-icon-belgium.png"
+                  height="10px"
+                  alt=""
+                />
+              </td>
+              {% elif order[3] == "Netherlands, The"%}
+              <td>
+                <img
+                  src="/static/img/flag-icon-holland.png"
+                  height="10px"
+                  alt=""
+                />
+              </td>
+              {% else %}
+              <td>
+                <img
+                  src="/static/img/flag-icon-france.png"
+                  height="10px"
+                  alt=""
+                />
+              </td>
+              {% endif%}
+
+              <td class="orderlist-date">{{order[5]}}</td>
+              <!-- <td class="orderlijst-status">{{order[6]}}</td> -->
+              <td
+                class="orderlijst-status text-center badge text-wrap mt-2"
+                style="width: 10rem"
               >
-            </td>
-            <td>{{order[1]}} {{order[2]}}</td>
-            {%if order[3] == "Belgium"%}
-            <td>
-              <img
-                src="/static/img/flag-icon-belgium.png"
-                height="10px"
-                alt=""
-              />
-            </td>
-            {% elif order[3] == "Netherlands, The"%}
-            <td>
-              <img
-                src="/static/img/flag-icon-holland.png"
-                height="10px"
-                alt=""
-              />
-            </td>
-            {% else %}
-            <td>
-              <img
-                src="/static/img/flag-icon-france.png"
-                height="10px"
-                alt=""
-              />
-            </td>
-            {% endif%}
+                {{order[6]}}
+              </td>
 
-            <td class="orderlist-date">{{order[5]}}</td>
-            <!-- <td class="orderlijst-status">{{order[6]}}</td> -->
-            <td
-              class="orderlijst-status text-center badge text-wrap mt-2"
-              style="width: 10rem"
-            >
-              {{order[6]}}
-            </td>
-
-            <td class="orderlist-price">€ {{order[7]}}</td>
-          </tr>
-          {% endfor %}
+              <td class="orderlist-price">€ {{order[7]}}</td>
+            </tr>
+            {% endfor %}
+          </form>
         </tbody>
       </table>
     </div>

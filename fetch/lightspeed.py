@@ -97,8 +97,12 @@ def fetch_orders_since(last_order):
 # //--------------GET PRODUCTS FROM ORDER LIGHTSPEED------------
 
 def get_machine_inst(article):
-    r = exact_products_collection.find_one({"article": article})
-    return r
+    try:
+        r = exact_products_collection.find_one({"article": article})
+        return r
+    except:
+        r = exact_products_collection.find_one({"article": "1000000"})
+        return r
 
 
 def fetch_products_from_order(order_id, order_number):
@@ -193,7 +197,8 @@ def fetch_and_save_lsorders(last_order_id):
 
 if __name__ == "__main__":
 
-    # fetch_and_save_lsorders(252071621)
+    # fetch_and_save_lsorders(252143509)
+
     print(__name__, ": VAN FETCH LIFGTSPEED")
 
 
