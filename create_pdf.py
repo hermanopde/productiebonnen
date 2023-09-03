@@ -44,6 +44,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
     machine2 = 'X 252 30/20/400'
     logo = "./static/img/Logo-brianto.png"
     dummy = "./static/img/dummy.png"
+    barcodefile = "./static/img/BC-252336133.png"
 
     def format_date(str):
         date_format = '%Y-%m-%dT%H:%M:%S+02:00'
@@ -53,6 +54,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
 
     # solve unicode issues hith latin-1 supported fonts
     def solve_unicode(str):
+        formatted_1 = str.replace('œ', 'oe')
         formatted_1 = str.replace('’', '-')
         formatted_str = formatted_1.encode(
             'latin1', errors="replace").decode('latin1')
@@ -63,7 +65,7 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
 
         pdf.set_font('helvetica', 'B', 10)
         pdf.cell(
-            115, 10, f'{product["productTitle"]} {product["variantTitle"]}', 0, 0, 'L')
+            115, 10, f'{solve_unicode(product["productTitle"])} {solve_unicode(product["variantTitle"])}', 0, 0, 'L')
         pdf.set_font('helvetica', '', 10)
         pdf.cell(25, 10, f'{product["articleCode"]}', 0, 0, 'C')
         pdf.cell(25, 10, '998877', 0, 0, 'C')
@@ -74,8 +76,10 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
         pdf.set_font('helvetica', '', 10)
         cord_y = pdf.get_y()
         pdf.set_font('helvetica', '', 9)
-        pdf.multi_cell(80, 5, f'{product["productie_inst_1"]}', 0, 1, 'L')
-        pdf.multi_cell(80, 5, f'{product["productie_inst_2"]}', 0, 1, 'L')
+        pdf.multi_cell(
+            80, 5, f'{solve_unicode(product["productie_inst_1"])}', 0, 1, 'L')
+        pdf.multi_cell(
+            80, 5, f'{solve_unicode(product["productie_inst_2"])}', 0, 1, 'L')
         if product["jpgFileName"]:
             try:
 
@@ -198,6 +202,15 @@ def create_orderbonnen(orders, hoogste, aantal_pag):
         pdf.set_font('helvetica', 'B', 10)
         pdf.cell(
             70, 5, f'{order["addressShippingCountry"]}', 0, 1, 'L')
+        pdf.set_y(245)
+
+        try:
+            pdf.image(
+                f'/Users/herma/stack2/prints/{order["id"]}.png', x=150, y=None, w=50, h=30, type='', link='')
+            pdf.image(
+                f'/home/hodb/productiebonnen/static/prints/{order["id"]}.png', x=150, y=None, w=50, h=30, type='', link='')
+        except:
+            pass
 
     pdf.output(
         f'/Users/herma/stack2/pdf/Bonnen-{hoogste}-p-{aantal_pag}.pdf', 'F')

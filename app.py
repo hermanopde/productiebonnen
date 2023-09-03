@@ -307,7 +307,7 @@ def print_checkbox():
         if aantal_orders != 0:
             hoogste_order_number = max(r)
             gevonden_orders = orders_collection.find(
-                {"number": {"$in": order_list}}).sort("number", -1)
+                {"number": {"$in": order_list}}).sort("paid_created_at", -1)
 
             create_orderbonnen(
                 gevonden_orders, hoogste_order_number, aantal_orders)
@@ -497,6 +497,6 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     print("APP IS RUNNING ON PORT 5000")
-    # app.run(debug=True)
-    app.run()
+    app.run(debug=True)
+    # app.run()
     print("AFTER APP RUN")

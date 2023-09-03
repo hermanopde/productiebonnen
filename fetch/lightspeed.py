@@ -135,17 +135,20 @@ def fetch_products_from_order(order_id, order_number):
         if prod["customFields"] != False:
 
             for field in prod["customFields"]:
-                if "id" in field.values() and field["values"][0]["value"] != False and field["values"][0]["value"] != None:
-                    product["customizationString"] = field["values"][0]["value"]
-                    product["customizationId"] = product["customizationString"].split(".")[
-                        0]
-                    product["customizationToken"] = product["customizationString"].split(".")[
-                        1]
-                    formatted_1 = product["productTitle"].replace(" ", "-")
-                    formatted_product_title = formatted_1.replace("'", "-")
+                try:
+                    if "id" in field.values() and field["values"][0]["value"] != False and field["values"][0]["value"] != None:
+                        product["customizationString"] = field["values"][0]["value"]
+                        product["customizationId"] = product["customizationString"].split(".")[
+                            0]
+                        product["customizationToken"] = product["customizationString"].split(".")[
+                            1]
+                        formatted_1 = product["productTitle"].replace(" ", "-")
+                        formatted_product_title = formatted_1.replace("'", "-")
 
-                    product["pdfFileName"] = f"{order_number}-{product['customizationId']}-{formatted_product_title}.pdf"
-                    product["jpgFileName"] = f"{order_number}-{product['customizationId']}-{formatted_product_title}.jpg"
+                        product["pdfFileName"] = f"{order_number}-{product['customizationId']}-{formatted_product_title}.pdf"
+                        product["jpgFileName"] = f"{order_number}-{product['customizationId']}-{formatted_product_title}.jpg"
+                except:
+                    pass
 
         product_list_for_db.append(product)
         # product_list_for_db.append({"naam": "joske", "beroep": "werker"})
@@ -197,7 +200,8 @@ def fetch_and_save_lsorders(last_order_id):
 
 if __name__ == "__main__":
 
-    # fetch_and_save_lsorders(252143509)
+    # fetch_and_save_lsorders(252560618)
+    # fetch_orders_since(252581387)
 
     print(__name__, ": VAN FETCH LIFGTSPEED")
 

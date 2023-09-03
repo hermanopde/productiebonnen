@@ -10,7 +10,8 @@ import hashlib
 import hmac
 from stack import upload_custom
 from datetime import datetime
-
+from barcode.writer import ImageWriter
+from barcode import Code128
 
 config = dotenv_values(".env")
 
@@ -30,6 +31,11 @@ COLORLAB_API_KEY = config["COLORLAB_API_KEY"]
 COLORLAB_API_SECRET = config["COLORLAB_API_SECRET"]
 
 POPPLER_PATH = r"C:\Users\herma\Downloads\Release-23.01.0-0\poppler-23.01.0\Library\bin"
+
+
+def create_barcode(id):
+    my_code = Code128(id, writer=ImageWriter())
+    my_code.save(f'/Users/herma/stack2/pdf/BC-{id}')
 
 
 def get_customization():
@@ -82,6 +88,8 @@ def get_customization():
                 # SLEEP : 6 colorlab requests per minute
                 time.sleep(10)
 
+            time.sleep(1)
+            create_barcode(str(order["id"]))
             objInstance = ObjectId(order["_id"])
             order_collection.update_one({"_id": objInstance}, {
                 "$set": {"flagCustomDownloaded": True}})
